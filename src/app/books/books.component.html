@@ -1,0 +1,25 @@
+<div class="content" fxLayoutAlign="space-around" fxLayout="column" fxLayout.xs="column" fxFlexFill>
+
+  <div fxFlex="50" fxFlex.xs="50">
+    <app-add-book (newBookAddedTriggered)="addToList($event)"></app-add-book>
+  </div>
+  <br>
+  <div fxFlex="50" fxFlex.xs="50">
+    <mat-card class="add-book-card">
+      <mat-card-header>
+        <mat-card-title>Book List ({{bookList.length || 0}})</mat-card-title>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let book of bookList">
+            <mat-icon mat-list-icon>book</mat-icon>
+            <h4 mat-line>Title: {{book.title}} ({{book.category}})</h4>
+            <div mat-line class="book-description" title="{{book.description}}">Description: {{book.description}}</div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

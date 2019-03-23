@@ -1,0 +1,49 @@
+<div>
+  <form #form="ngForm" [formGroup]="addBookForm" class="example-form" (ngSubmit)="addBook(form)">
+    <mat-card class="add-book-card">
+      <mat-card-header>
+        <mat-card-title>Add Book</mat-card-title>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <br>
+        <mat-form-field class="example-full-width">
+          <input matInput maxlength="30" placeholder="Title *" formControlName="title">
+          <mat-hint align="start"></mat-hint>
+          <mat-hint align="end">{{addBookForm.controls.title.value ? addBookForm.controls.title.value.length : 0}} / 30</mat-hint>
+          <mat-error *ngIf="!addBookForm.controls.title.value || addBookForm.controls.title.hasError('required')">
+            Title is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="example-full-width">
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="category" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let category of categories" [value]="category">
+              {{category}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="!addBookForm.controls.category.value || addBookForm.controls.category.hasError('required')">Please choose a category
+          </mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="example-full-width">
+          <mat-label>Description *</mat-label>
+          <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
+            cdkAutosizeMaxRows="5" formControlName="description"></textarea>
+          <mat-hint align="start"></mat-hint>
+          <mat-hint align="end">{{addBookForm.controls.description.value ? addBookForm.controls.description.value.length : 0}}</mat-hint>
+          <mat-error *ngIf="!addBookForm.controls.description.value || addBookForm.controls.description.hasError('required')">
+            Description is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <div fxLayout="row" fxLayoutAlign="end">
+          <button type="submit" mat-raised-button [disabled]="!addBookForm.valid">Add</button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>
