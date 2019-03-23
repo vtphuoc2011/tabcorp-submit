@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'tabcorp-submit'`, () => {
+  it(`should have as title `, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('tabcorp-submit');
+    expect(app.title).toEqual('');
   });
 
-  it('should render title in a h1 tag', () => {
+  it('should not render title in a h3 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to tabcorp-submit!');
+    expect(compiled.querySelector('h3').textContent).toContain('');
   });
 });
