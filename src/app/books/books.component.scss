@@ -1,3 +1,14 @@
-.book-description {
-  word-wrap: break-word;
+.book-list .mat-list-item {
+  height: auto;
+  font-size: 14px;
+  .mat-line {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .book-description {
+    margin: 5px 0 10px 0;
+  }
+  .book-title {
+    margin-top: 10px;
+  }
 }

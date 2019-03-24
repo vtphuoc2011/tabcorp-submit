@@ -11,11 +11,12 @@
       </mat-card-header>
       <mat-divider></mat-divider>
       <mat-card-content>
-        <mat-list>
+        <mat-list class='book-list'>
           <mat-list-item *ngFor="let book of bookList">
             <mat-icon mat-list-icon>book</mat-icon>
-            <h4 mat-line>Title: {{book.title}} ({{book.category}})</h4>
-            <div mat-line class="book-description" title="{{book.description}}">Description: {{book.description}}</div>
+            <div mat-line class="book-title"><strong>Title: </strong> {{book.title}} <i>({{book.category}})</i></div>
+            <div mat-line class="book-description" title="{{book.description}}"><strong>Description: </strong> {{book.description}}</div>
+            <mat-divider></mat-divider>
           </mat-list-item>
         </mat-list>
       </mat-card-content>
