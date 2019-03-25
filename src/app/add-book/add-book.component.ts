@@ -1,8 +1,9 @@
 import { Component, OnInit, NgZone, ViewChild, Output, EventEmitter } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormControl, Validators, FormGroup, ValidatorFn, AbstractControl } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import {take} from 'rxjs/operators';
+import {take, map, filter} from 'rxjs/operators';
 import { Book } from '../shared/book';
+import { isString } from 'util';
 
 @Component({
   selector: 'app-add-book',
@@ -13,13 +14,13 @@ export class AddBookComponent implements OnInit {
 
   addBookForm = new FormGroup({
     title : new FormControl('', [
-      Validators.required
+      trimValidator()
     ]),
     category : new FormControl('', [
       Validators.required
     ]),
     description : new FormControl('', [
-      Validators.required
+      trimValidator()
     ]),
   });
 
@@ -29,8 +30,7 @@ export class AddBookComponent implements OnInit {
   @Output() newBookAddedTriggered: EventEmitter<Book> = new EventEmitter();
   constructor(private ngZone: NgZone) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   triggerResize() {
     // Wait for changes to be applied, then trigger textarea resize.
@@ -49,4 +49,12 @@ export class AddBookComponent implements OnInit {
     this.addBookForm.reset();
   }
 
+}
+
+export function trimValidator(): ValidatorFn {
+  return (control: AbstractControl): {[key: string]: any} | null => {
+    return !control.value || (isString(control.value) && control.value.trim() == "") ?
+      { "required": true } :
+      null;
+  };
 }
