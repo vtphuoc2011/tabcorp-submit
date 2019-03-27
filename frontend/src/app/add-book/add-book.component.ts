@@ -1,9 +1,10 @@
 import { Component, OnInit, NgZone, ViewChild, Output, EventEmitter } from '@angular/core';
-import { FormControl, Validators, FormGroup, ValidatorFn, AbstractControl } from '@angular/forms';
+import { FormControl, Validators, FormGroup, ValidatorFn, AbstractControl, NgForm } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {take, map, filter} from 'rxjs/operators';
 import { Book } from '../shared/book';
-import { isString } from 'util';
+import { trimValidator } from '../shared/custom-validator';
+
 
 @Component({
   selector: 'app-add-book',
@@ -12,23 +13,21 @@ import { isString } from 'util';
 })
 export class AddBookComponent implements OnInit {
 
-  addBookForm = new FormGroup({
-    title : new FormControl('', [
-      trimValidator()
-    ]),
-    category : new FormControl('', [
-      Validators.required
-    ]),
-    description : new FormControl('', [
-      trimValidator()
-    ]),
-  });
-
+  addBookForm: FormGroup;
   categories = ['Drama', 'Comedy', 'Sport'];
+  defaultBook: Book = {
+    title: '',
+    category: '',
+    description: ''
+  };
+  submitted = false;
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
+  @ViewChild('frm') form: NgForm;
   @Output() newBookAddedTriggered: EventEmitter<Book> = new EventEmitter();
-  constructor(private ngZone: NgZone) { }
+  constructor(private ngZone: NgZone) {
+    this.createForm();
+  }
 
   ngOnInit() {}
 
@@ -38,23 +37,31 @@ export class AddBookComponent implements OnInit {
         .subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
-  addBook(formDirective) {
-    let newBook: Book = {
+  createForm(): void {
+    this.addBookForm = new FormGroup({
+      title : new FormControl(this.defaultBook.title, [
+        trimValidator()
+      ]),
+      category : new FormControl(this.defaultBook.category, [
+        Validators.required
+      ]),
+      description : new FormControl(this.defaultBook.description, [
+        trimValidator()
+      ]),
+    });
+  }
+
+  addBook() {
+    this.submitted = true;
+    const newBook: Book = {
       title: this.addBookForm.value.title.trim(),
       category: this.addBookForm.value.category,
       description: this.addBookForm.value.description.trim(),
     };
     this.newBookAddedTriggered.emit(newBook);
-    formDirective.resetForm();
+    this.form.resetForm();
     this.addBookForm.reset();
   }
 
 }
 
-export function trimValidator(): ValidatorFn {
-  return (control: AbstractControl): {[key: string]: any} | null => {
-    return !control.value || (isString(control.value) && control.value.trim() == "") ?
-      { "required": true } :
-      null;
-  };
-}
