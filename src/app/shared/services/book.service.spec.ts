@@ -1,12 +1,15 @@
-import { TestBed } from '@angular/core/testing';
-
+import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { BookService } from './book.service';
+import { Book } from '../models/book';
 
 describe('BookService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => TestBed.configureTestingModule({
+    imports: [HttpClientTestingModule],
+    providers: [BookService]
+  }));
 
-  it('should be created', () => {
-    const service: BookService = TestBed.get(BookService);
-    expect(service).toBeTruthy();
-  });
+  it('should be created', inject([BookService], (bookService: BookService) => {
+    expect(bookService).toBeTruthy();
+  }));
 });

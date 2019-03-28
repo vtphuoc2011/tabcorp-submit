@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 
 import { BooksComponent } from './books.component';
 import { AddBookComponent } from '../add-book/add-book.component';
@@ -11,6 +11,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BookService } from '../shared/services/book.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('BooksComponent', () => {
   let component: BooksComponent;
@@ -29,8 +31,10 @@ describe('BooksComponent', () => {
         MatIconModule,
         BrowserAnimationsModule,
         FormsModule,
-        ReactiveFormsModule
-      ]
+        ReactiveFormsModule,
+        HttpClientTestingModule
+      ],
+      providers: [BookService]
     })
     .compileComponents();
   }));
@@ -41,7 +45,7 @@ describe('BooksComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create',inject([BookService], (bookService: BookService) => {
     expect(component).toBeTruthy();
-  });
+  }));
 });
