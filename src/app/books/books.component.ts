@@ -38,8 +38,7 @@ export class BooksComponent implements OnInit {
             description: res.data.description,
             category: res.data.category
           }
-          this.bookList.push(book);
-          this.bookList = [...this.bookList];
+          this.bookList = [book,...this.bookList];
         }
       });
     }
