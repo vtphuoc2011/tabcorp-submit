@@ -2,8 +2,8 @@ import { Component, OnInit, NgZone, ViewChild, Output, EventEmitter } from '@ang
 import { FormControl, Validators, FormGroup, ValidatorFn, AbstractControl, NgForm } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {take, map, filter} from 'rxjs/operators';
-import { Book } from '../shared/book';
-import { trimValidator } from '../shared/custom-validator';
+import { Book } from '../shared/models/book';
+import { trimValidator } from '../shared/validators/custom-validator';
 
 
 @Component({

@@ -15,6 +15,8 @@ import { AppComponent } from './app.component';
 import { BooksComponent } from './books/books.component';
 import { AddBookComponent } from './add-book/add-book.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { BookService } from './shared/services/book.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,9 +37,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatListModule,
     MatIconModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [BookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
